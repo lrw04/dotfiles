@@ -27,5 +27,5 @@ UI scaling is automatically detected on KDE Plasma.
 Add the following entry in /etc/fstab:
 
 ```
-//server/share /mnt/mountpoint    cifs    _netdev,nofail,vers=2.0,username=?,password=? 0 0
+//server/share /mnt/mountpoint    smb3    _netdev,nofail,noauto,x-systemd.automount,username=?,password=? 0 0
 ```
