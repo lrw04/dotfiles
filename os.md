@@ -24,8 +24,4 @@ UI scaling is automatically detected on KDE Plasma.
 
 ## Network shares
 
-Add the following entry in /etc/fstab:
-
-```
-//server/share /mnt/mountpoint    smb3    _netdev,nofail,noauto,x-systemd.automount,username=?,password=? 0 0
-```
+Follow instructions on <https://wiki.archlinux.org/title/Samba#Storing_share_passwords> and <https://wiki.archlinux.org/title/Samba#automount>.
