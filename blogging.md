@@ -8,4 +8,5 @@ cd bwog
 ros build bwog.ros
 mkdir -p ~/.local/bin
 mv bwog ~/.local/bin
+mv tectonic ~/.local/bin
 ```
