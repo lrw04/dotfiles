@@ -25,9 +25,9 @@
 (global-display-line-numbers-mode 1)
 (setq display-line-numbers-type 'relative)
 '(add-to-list 'default-frame-alist '(width . 160))
-'(add-to-list 'default-frame-alist '(height . 50))
+'(add-to-list 'default-frame-alist '(height . 60))
 (fset 'yes-or-no-p 'y-or-n-p)
-(load-theme 'adwaita t)
+(load-theme 'leuven t)
 
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
@@ -36,8 +36,9 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
-'(package-refresh-contents)
-(package-install 'use-package)
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 (require 'use-package)
 
 ;; Configure general packages
@@ -143,6 +144,32 @@
 
 (require 'doc-view)
 (setq doc-view-resolution 288)
+
+;; C++
+(use-package lsp-mode :ensure t
+  :config (define-key lsp-mode-map (kbd "C-c l") lsp-command-map))
+(use-package yasnippet :ensure t)
+(use-package lsp-treemacs :ensure t)
+(use-package helm-lsp :ensure t)
+(use-package hydra :ensure t)
+(use-package flycheck :ensure t)
+(use-package company :ensure t)
+(use-package which-key :ensure t
+  :config (which-key-mode))
+(use-package helm-xref :ensure t
+  :config (progn
+            (define-key global-map [remap find-file] #'helm-find-files)
+            (define-key global-map [remap execute-extended-command] #'helm-M-x)
+            (define-key global-map [remap switch-to-buffer] #'helm-mini)))
+(use-package helm :ensure t :config (helm-mode))
+(use-package dap-mode :ensure t)
+(add-hook 'c-mode-hook 'lsp)
+(add-hook 'c++-mode-hook 'lsp)
+
+(with-eval-after-load 'lsp-mode
+  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
+  (require 'dap-cpptools)
+  (yas-global-mode))
 
 (provide 'init)
 (custom-set-variables
