@@ -7,8 +7,8 @@
 
 '(add-to-list 'load-path (expand-file-name "custom" user-emacs-directory))
 
-'(set-fontset-font t nil (font-spec :size 14 :name "等距更纱黑体 SC"))
-'(set-frame-font "等距更纱黑体 SC 14" nil t)
+(set-fontset-font t nil (font-spec :size 20 :name "Sarasa Mono SC"))
+(set-frame-font "Sarasa Mono SC 20" nil t)
 '(set-language-environment "UTF-8")
 
 ;; Convenience settings
@@ -21,6 +21,7 @@
 (global-auto-revert-mode t)	                              ; automatically refresh on file change
 (delete-selection-mode t)	                              ; replace marked text when typing
 (setq make-backup-files nil)
+(setq auto-save-default t)
 (add-hook 'prog-mode-hook #'hs-minor-mode)                ; enable folding
 (global-display-line-numbers-mode 1)
 (setq display-line-numbers-type 'relative)
@@ -171,6 +172,10 @@
   (require 'dap-cpptools)
   (yas-global-mode))
 
+(use-package clang-format :ensure t)
+(setq clang-format-style "file")
+(setq clang-format-fallback-style "{ BasedOnStyle: Google, IndentWidth: 4 }")
+
 (provide 'init)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -180,7 +185,7 @@
  '(display-line-numbers-type 'relative)
  '(global-display-line-numbers-mode t)
  '(package-selected-packages
-   '(use-package undo-tree slime rainbow-delimiters paredit mwim marginalia highlight-symbol dashboard counsel-projectile company-auctex amx ace-window)))
+   '(clang-format use-package undo-tree slime rainbow-delimiters paredit mwim marginalia highlight-symbol dashboard counsel-projectile company-auctex amx ace-window)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
