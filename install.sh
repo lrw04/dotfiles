@@ -8,7 +8,7 @@ cd yay
 makepkg -si --needed --noconfirm
 cd ..
 rm -rf yay
-yay -S --needed --noconfirm cifs-utils ibus ibus-autostart virt-manager qemu-desktop dnsmasq iptables-nft texlive texlive-lang biber vlc clementine chez-scheme cmake go man-pages man-db visual-studio-code-bin firefox xdg-user-dirs noto-fonts noto-fonts-{cjk,emoji,extra} ttf-sarasa-gothic
+yay -S --needed --noconfirm cifs-utils ibus ibus-autostart virt-manager qemu-desktop dnsmasq iptables texlive texlive-lang biber vlc clementine chez-scheme cmake go man-pages man-db visual-studio-code-bin firefox xdg-user-dirs noto-fonts noto-fonts-{cjk,emoji,extra} ttf-sarasa-gothic
 sudo systemctl enable libvirtd
 sudo usermod -aG libvirt $(whoami)
 xdg-user-dirs-update
@@ -85,14 +85,14 @@ cat << EOF > ~/.config/Code/User/config.json
 }
 EOF
 
-mkdir -p /etc/samba/credentials
+sudo mkdir -p /etc/samba/credentials
 cat << EOF | sudo tee /etc/samba/credentials/nas > /dev/null
 user=$smbuser
 pass=$smbpass
 EOF
 sudo chmod 600 /etc/samba/credentials/nas
 
-mkdir /mnt/nas
+sudo mkdir /mnt/nas
 cat /etc/fstab - << EOF > /tmp/new_fstab
 $smbshare /mnt/nas smb3 _netdev,nofail,cred=/etc/samba/credentials/nas,uid=1000,gid=1000 0 0
 EOF
