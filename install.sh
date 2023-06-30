@@ -72,6 +72,7 @@ sidebar-bookmark-breakpoint=0
 start-with-sidebar=true
 EOF
 
+mkdir -p ~/.config/Code/User/
 cat << EOF > ~/.config/Code/User/config.json
 {
     "workbench.colorTheme": "Default Light+",
