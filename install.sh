@@ -8,7 +8,7 @@ cd yay
 makepkg -si --needed --noconfirm
 cd ..
 rm -rf yay
-yay -S --needed --noconfirm cifs-utils ibus ibus-autostart virt-manager qemu-desktop dnsmasq iptables texlive texlive-lang biber vlc clementine chez-scheme cmake go man-pages man-db visual-studio-code-bin firefox xdg-user-dirs noto-fonts noto-fonts-{cjk,emoji,extra} ttf-sarasa-gothic
+yay -S --needed --noconfirm nomacs cifs-utils ibus ibus-autostart virt-manager qemu-desktop dnsmasq iptables texlive texlive-lang biber vlc clementine chez-scheme cmake go man-pages man-db visual-studio-code-bin firefox xdg-user-dirs noto-fonts noto-fonts-{cjk,emoji,extra} ttf-sarasa-gothic
 sudo systemctl enable libvirtd
 sudo usermod -aG libvirt $(whoami)
 xdg-user-dirs-update
