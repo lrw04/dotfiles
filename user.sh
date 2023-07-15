@@ -11,11 +11,27 @@ triggers=['<Control>space']
 
 [org/cinnamon]
 enabled-applets=['panel1:left:0:menu@cinnamon.org:0', 'panel1:left:1:separator@cinnamon.org:1', 'panel1:left:2:grouped-window-list@cinnamon.org:2', 'panel1:right:0:systray@cinnamon.org:3', 'panel1:right:1:xapp-status@cinnamon.org:4', 'panel1:right:2:notifications@cinnamon.org:5', 'panel1:right:3:printers@cinnamon.org:6', 'panel1:right:4:removable-drives@cinnamon.org:7', 'panel1:right:5:keyboard@cinnamon.org:8', 'panel1:right:6:favorites@cinnamon.org:9', 'panel1:right:7:network@cinnamon.org:10', 'panel1:right:8:sound@cinnamon.org:11', 'panel1:right:9:power@cinnamon.org:12', 'panel1:right:10:calendar@cinnamon.org:13', 'panel1:right:11:cornerbar@cinnamon.org:14']
+enabled-desklets=@as []
 next-applet-id=15
+
+[org/cinnamon/desktop/a11y/applications]
+screen-keyboard-enabled=false
+screen-reader-enabled=false
+
+[org/cinnamon/desktop/a11y/mouse]
+dwell-click-enabled=false
+dwell-threshold=10
+dwell-time=1.2
+secondary-click-enabled=false
+secondary-click-time=1.2
+
+[org/cinnamon/desktop/background]
+picture-uri='file:///mnt/nas/pictures/cinnamoroll.webp'
 
 [org/cinnamon/desktop/interface]
 font-name='Noto Sans CJK SC 9'
 text-scaling-factor=1.0
+toolkit-accessibility=false
 
 [org/cinnamon/desktop/sound]
 event-sounds=false
@@ -23,12 +39,12 @@ event-sounds=false
 [org/cinnamon/desktop/wm/preferences]
 titlebar-font='Noto Sans CJK SC Bold 10'
 
+[org/cinnamon/muffin]
+experimental-features=['x11-randr-fractional-scaling']
+
 [org/gnome/desktop/a11y/applications]
 screen-keyboard-enabled=false
 screen-reader-enabled=false
-
-[org/cinnamon/desktop/background]
-picture-uri='file:///mnt/nas/pictures/cinnamoroll.webp'
 
 [org/gnome/desktop/a11y/mouse]
 dwell-click-enabled=false
@@ -50,22 +66,11 @@ sidebar-bookmark-breakpoint=0
 start-with-sidebar=true
 EOF
 
-mkdir -p ~/.config/Code/User/
-cat << EOF > ~/.config/Code/User/settings.json
-{
-    "workbench.colorTheme": "Default Light+",
-    "C_Cpp.default.compilerPath": "/usr/bin/g++",
-    "files.autoSave": "afterDelay",
-    "editor.fontFamily": "'Sarasa Mono SC', 'Droid Sans Mono', 'monospace', monospace",
-    "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: Google, UseTab: Never, IndentWidth: 4, TabWidth: 4 }",
-    "C_Cpp.clang_format_style": "{ BasedOnStyle: Google, UseTab: Never, IndentWidth: 4, TabWidth: 4 }",
-    "C_Cpp.default.cppStandard": "c++23",
-    "C_Cpp.default.cStandard": "c23"
-}
-EOF
-
 cat << EOF > ~/.emacs
+(setq inhibit-startup-message t) 
+(setq initial-scratch-message nil)
 (setq visible-bell 1)			                          ; disable ringing for C-g and such
+(setq-default indent-tabs-mode nil)
 (setq gc-cons-threshold (* 256 1024 1024))               ; to accelerate boot?	
 (defconst *spell-check-support-enabled* t)
 (electric-pair-mode t)		                              ; automatically pair parentheses
@@ -154,6 +159,7 @@ cat << EOF > ~/.emacs
   :ensure t
   :hook ((prog-mode . rainbow-delimiters-mode)))
 
+;; Scheme
 (use-package paredit
              :ensure t
              :commands (enable-paredit-mode)
@@ -167,7 +173,7 @@ cat << EOF > ~/.emacs
                                     (lambda () (paredit-mode +1)))))
 
 (use-package geiser-chez :ensure t)
-(setq geiser-chez-binary "/usr/bin/chez")
+(setq geiser-chez-binary "chez")
 
 ;; Configuration for LaTeX editing
 (setq doc-view-continuous t)
@@ -197,7 +203,8 @@ cat << EOF > ~/.emacs
 (use-package helm-lsp :ensure t)
 (use-package hydra :ensure t)
 (use-package flycheck :ensure t)
-(use-package company :ensure t)
+(use-package company :ensure t
+  :config (company-mode))
 (use-package which-key :ensure t
   :config (which-key-mode))
 (use-package helm-xref :ensure t
@@ -220,4 +227,17 @@ cat << EOF > ~/.emacs
 (setq clang-format-fallback-style "{ BasedOnStyle: Google, IndentWidth: 4 }")
 
 (provide 'init)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(clang-format dap-mode helm-xref which-key flycheck helm-lsp lsp-treemacs lsp-mode company-auctex auctex geiser-chez paredit rainbow-delimiters highlight-symbol dashboard counsel-projectile projectile marginalia mwim ace-window amx counsel ivy use-package)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
 EOF
